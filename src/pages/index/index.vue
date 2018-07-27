@@ -2,7 +2,12 @@
   <div class="container" @click="clickHandle('test click', $event)">
 
     <div class="userinfo" @click="bindViewTap">
-      <img class="userinfo-avatar" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl" background-size="cover" />
+      <img 
+        class="userinfo-avatar"
+        v-if="userInfo.avatarUrl"
+        :src="userInfo.avatarUrl"
+        background-size="cover"
+      />
       <div class="userinfo-nickname">
         <card :text="userInfo.nickName"></card>
       </div>
@@ -15,10 +20,9 @@
     </div>
 
     <form class="form-container">
-      <input type="text" class="form-control" v-model="motto" placeholder="v-model" />
-      <input type="text" class="form-control" v-model.lazy="motto" placeholder="v-model.lazy" />
+      <input type="text" class="form-control" v-model="motto" placeholder="此刻的想法/心情" />
     </form>
-    <a href="/pages/counter/main" class="counter">去往Vuex示例页面</a>
+    <a href="/pages/pics/main" class="counter">看板</a>
   </div>
 </template>
 
@@ -28,7 +32,7 @@ import card from '@/components/card'
 export default {
   data () {
     return {
-      motto: 'Hello Worlds',
+      motto: '',
       userInfo: {}
     }
   },
@@ -39,8 +43,8 @@ export default {
 
   methods: {
     bindViewTap () {
-      const url = '../logs/main'
-      wx.navigateTo({ url })
+      // const url = '../logs/main'
+      // wx.navigateTo({ url })
     },
     getUserInfo () {
       // 调用登录接口
@@ -59,6 +63,14 @@ export default {
     }
   },
 
+  watchs: {
+    motto (newValue) {
+      if (!newValue) {
+        newValue = ' '
+      }
+    }
+  },
+
   created () {
     // 调用应用实例的方法获取全局数据
     this.getUserInfo()
@@ -66,7 +78,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .userinfo {
   display: flex;
   flex-direction: column;
@@ -86,6 +98,10 @@ export default {
 
 .usermotto {
   margin-top: 150px;
+}
+
+.user-motto {
+  height: 50px;
 }
 
 .form-control {

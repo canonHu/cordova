@@ -1,15 +1,10 @@
 <template>
   <div>
-    <ul class="container log-list">
-      <li v-for="(log, index) in logs" :class="{ red: aa }" :key="index" class="log-item">
-        <card :text="(index + 1) + ' . ' + log"></card>
-      </li>
-    </ul>
+    <card :text="logs"></card>
   </div>
 </template>
 
 <script>
-import { formatTime } from '@/utils/index'
 import card from '@/components/card'
 
 export default {
@@ -19,25 +14,11 @@ export default {
 
   data () {
     return {
-      logs: []
+      logs: '什么都没有呢'
     }
-  },
-
-  created () {
-    const logs = (wx.getStorageSync('logs') || [])
-    this.logs = logs.map(log => formatTime(new Date(log)))
   }
 }
 </script>
 
-<style>
-.log-list {
-  display: flex;
-  flex-direction: column;
-  padding: 40rpx;
-}
-
-.log-item {
-  margin: 10rpx;
-}
+<style lang="less">
 </style>
