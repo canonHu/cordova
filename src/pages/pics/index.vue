@@ -1,7 +1,7 @@
 <template>
   <div class="counter-warp">
     <section class="we-love">
-      逆着光行走，仍风吹雨打
+      {{ yoursMood }}
     </section>
 
     <section class="pics">
@@ -9,7 +9,7 @@
         :key="index"
         class="pics-item"
         @click="change"
-        v-for="(item, index) in list"
+        v-for="(item, index) in loveList"
       >
         <image mode="widthFix" class="pics-item__zp" :src="item" />
       </section>
@@ -18,23 +18,29 @@
 </template>
 
 <script>
+import store from '../../store'
 export default {
   data () {
     return {
-      list: [
-        '/static/images/1.jpg',
-        '/static/images/2.png',
-        '/static/images/3.jpg',
-        '/static/images/4.jpg'
-      ]
+      loveList: []
+    }
+  },
+
+  computed: {
+    yoursMood () {
+      return store.state.yoursMood
     }
   },
 
   methods: {
     change () {
-      const url = '../logs/main'
+      const url = '../detail/main'
       wx.navigateTo({ url })
     }
+  },
+
+  created () {
+    this.loveList.push('http://www.canonhu.top:5000/love/love1.jpg')
   }
 }
 

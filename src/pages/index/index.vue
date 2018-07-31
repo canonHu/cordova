@@ -1,7 +1,6 @@
 <template>
-  <div class="container" @click="clickHandle('test click', $event)">
-
-    <div class="userinfo" @click="bindViewTap">
+  <div class="container">
+    <div class="userinfo">
       <img 
         class="userinfo-avatar"
         v-if="userInfo.avatarUrl"
@@ -20,13 +19,20 @@
     </div>
 
     <form class="form-container">
-      <input type="text" class="form-control" v-model="motto" placeholder="此刻的想法/心情" />
+      <input
+        type="text"
+        maxlength="15"
+        v-model="motto"
+        class="form-control"
+        placeholder="此刻的想法/心情"
+      />
     </form>
-    <a href="/pages/pics/main" class="counter">看板</a>
+    <div @click="toList" class="counter">看得见的时候</div>
   </div>
 </template>
 
 <script>
+import store from '../../store'
 import card from '@/components/card'
 
 export default {
@@ -42,9 +48,18 @@ export default {
   },
 
   methods: {
-    bindViewTap () {
-      // const url = '../logs/main'
-      // wx.navigateTo({ url })
+    toList () {
+      if (!this.motto) {
+        wx.showToast({
+          title: '请填写此刻的心情',
+          icon: 'none',
+          duration: 2000
+        })
+        return
+      }
+      store.commit('remenberYours', { yoursMood: this.motto })
+      const url = '../pics/main'
+      wx.navigateTo({ url })
     },
     getUserInfo () {
       // 调用登录接口
@@ -57,16 +72,20 @@ export default {
           })
         }
       })
-    },
-    clickHandle (msg, ev) {
-      console.log('clickHandle:', msg, ev)
     }
+    // clickHandle (msg, ev) {
+    //   console.log('clickHandle:', msg, ev)
+    // }
   },
 
-  watchs: {
-    motto (newValue) {
-      if (!newValue) {
-        newValue = ' '
+  watch: {
+    motto (newValue, oldValue) {
+      if (newValue.length === 15) {
+        wx.showToast({
+          title: '不能超过15个字',
+          icon: 'none',
+          duration: 2000
+        })
       }
     }
   },
@@ -101,21 +120,25 @@ export default {
 }
 
 .user-motto {
-  height: 50px;
+  min-height: 50px;
+  text-align: center;
 }
 
 .form-control {
   display: block;
+  font-size: 14px;
   padding: 0 12px;
   margin-bottom: 5px;
   border: 1px solid #ccc;
 }
 
 .counter {
-  display: inline-block;
+  width: 50%;
+  font-size: 14px;
   margin: 10px auto;
   padding: 5px 10px;
-  color: blue;
-  border: 1px solid blue;
+  text-align: center;
+  transition: all 0.3s;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 </style>
