@@ -24,7 +24,7 @@
       <section
         @click="toDetail"
         class="edit-change__btn"
-      >哪还有那么些故事好讲</section>
+      ><!-- 哪还有那么些故事好讲 -->如果说够了的话</section>
     </section>
   </div>
 </template>
