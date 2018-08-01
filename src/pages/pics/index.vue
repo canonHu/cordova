@@ -8,10 +8,13 @@
       <section
         :key="index"
         class="pics-item"
-        @click="change"
+        @click="toDetail(item)"
         v-for="(item, index) in loveList"
       >
-        <image mode="widthFix" class="pics-item__zp" :src="item" />
+        <img mode="widthFix" class="pics-item__zp" :src="item" />
+      </section>
+      <section class="pics-add" @click="toEdit">
+        +
       </section>
     </section>
   </div>
@@ -33,14 +36,20 @@ export default {
   },
 
   methods: {
-    change () {
+    toDetail (item) {
       const url = '../detail/main'
+      wx.navigateTo({ url })
+    },
+
+    toEdit () {
+      const url = '../edit/main'
       wx.navigateTo({ url })
     }
   },
 
-  created () {
-    this.loveList.push('http://www.canonhu.top:5000/love/love1.jpg')
+  onShow () {
+    store.commit('changeDetail', { detailContent: {} })
+    this.loveList = ['https://m.tuniucdn.com/fb2/t1/G5/M00/9A/41/Cii-tFtX1qmIK2WhAAFlvzc_SLcAAKzAgFD0doAAWXX211.jpg']
   }
 }
 
@@ -63,8 +72,19 @@ export default {
   flex-direction: column;
   justify-content: center;
 
+  &-add {
+    height: 200px;
+    font-size: 50px;
+    line-height: 200px;
+    color: rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+
   &-item {
     width: 100%;
+    height: 200px;
+    overflow: hidden;
+    margin-bottom: 10px;
 
     &__zp {
       width: 100%;

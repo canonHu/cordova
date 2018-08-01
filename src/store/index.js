@@ -8,7 +8,8 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     count: 0,
-    yoursMood: '逆着光行走，仍风吹雨打'
+    yoursMood: '逆着光行走，仍风吹雨打',
+    detailContent: {}
   },
   mutations: {
     remenberYours: (state, action) => {
@@ -17,6 +18,9 @@ const store = new Vuex.Store({
       } else {
         state.yoursMood = '逆着光行走，仍风吹雨打'
       }
+    },
+    changeDetail: (state, action) => {
+      state.detailContent = action.detailContent
     },
     increment: (state) => {
       const obj = state
