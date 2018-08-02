@@ -2,8 +2,8 @@
   <div class="edit">
     <img
       alt=""
-      v-if="image || detailContent.image"
-      :src="image || detailContent.image"
+      v-if="image"
+      :src="image"
 			mode="widthFix"
       class="edit-img"
       @click="getImage"
@@ -15,8 +15,9 @@
     >添加一张有故事的图片</section>
 
     <textarea
+      :value="storeText"
+      v-model="storeText"
       class="edit-textarea"
-      :value="detailContent.store"
       placeholder="还有那些关于这张照片的故事"
     ></textarea>
 
@@ -37,22 +38,44 @@ export default {
   data () {
     return {
       logs: '什么都没有呢',
-      image: ''
+      image: '',
+      storeText: ''
     }
   },
 
   computed: {
     detailContent () {
-      // console.log(store.state.detailContent)
-      return store.state.detailContent
+      const detailContent = store.state.detailContent
+      this.image = detailContent.image !== undefined ? detailContent.image : ''
+      this.store = detailContent.store !== undefined ? detailContent.store : ''
     }
   },
 
   methods: {
-    toDetail (item) {
-      // const url = '../detail/main'
-      wx.navigateBack(1)
+    successFn (state) {
+      if (state.ok) {
+        store.commit('getData', {
+          url: 'findData',
+          params: {},
+          successFn: this.successFn
+        })
+        wx.navigateBack(1)
+      }
     },
+
+    toDetail (item) {
+      const params = [{
+        name: store.state.userInfo.nickName,
+        imageUrl: this.image,
+        store: this.storeText
+      }]
+      store.commit('getData', {
+        url: 'addData',
+        params,
+        successFn: this.successFn
+      })
+    },
+
     getImage () {
       wx.chooseImage({
         success: (res) => {
@@ -75,22 +98,12 @@ export default {
           })
 
           uploadTask.onProgressUpdate((res) => {
-            console.log('上传进度', res.progress)
-            console.log('已经上传的数据长度', res.totalBytesSent)
-            console.log('预期需要上传的数据总长度', res.totalBytesExpectedToSend)
+            // console.log('上传进度', res.progress)
+            // console.log('已经上传的数据长度', res.totalBytesSent)
+            // console.log('预期需要上传的数据总长度', res.totalBytesExpectedToSend)
           })
         }
       })
-    }
-  },
-
-  watch: {
-    detailContent (newValue) {
-      console.log(newValue)
-      // store.commit('changeDetail', {
-      //   image: this.image || newValue.image || '',
-      //   store: newValue.store
-      // })
     }
   }
 }

@@ -3,20 +3,23 @@
     <img
       alt=""
 			mode="widthFix"
-      :src="data.image"
+      :src="data.imageUrl"
       class="detail-img"
     >
 
-    <section
-      class="detail-textarea"
-      placeholder="还有那些关于这张照片的故事"
-    >{{ data.store }}</section>
+    <section class="detail-textarea">{{ data.store }}</section>
 
     <section class="detail-change">
       <section
-        @click="toEdit"
+        @click="forget"
         class="detail-change__btn"
-      >还有什么好说的？？？</section>
+      >什么都可以忘记</section>
+      <section
+        @click="toEdit"
+        class="detail-change__right"
+      >
+        <section class="detail-change__right--btn">还有什么好说的？？？</section>
+      </section>
     </section>
     <!-- <card :text="logs"></card> -->
   </div>
@@ -33,22 +36,20 @@ export default {
 
   data () {
     return {
-      data: {
-        image: 'https://m.tuniucdn.com/fb2/t1/G5/M00/9A/41/Cii-tFtX1qmIK2WhAAFlvzc_SLcAAKzAgFD0doAAWXX211.jpg',
-        store: '那都是些什么啊'
-      },
       logs: '什么都没有呢'
     }
   },
 
   computed: {
-    count () {
-      console.log(store.state.count)
-      return store.state.count
+    data () {
+      return store.state.detailState
     }
   },
 
   methods: {
+    forget () {
+      console.log(1)
+    },
     toEdit () {
       const url = '../edit/main'
       store.commit('changeDetail', { detailContent: this.data })
@@ -59,6 +60,10 @@ export default {
 </script>
 
 <style lang="less">
+  .btn {
+    padding: 5px 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
   .detail {
     padding: 20px;
 
@@ -82,16 +87,25 @@ export default {
       font-size: 14px;
       text-indent: 2em;
       margin-top: 10px;
+      margin-bottom: 100px;
     }
 
     &-change {
       display: flex;
       font-size: 14px;
-      flex-direction: row-reverse;
 
       &__btn {
-        padding: 5px 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        .btn;
+      }
+
+      &__right {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: row-reverse;
+
+        &--btn {
+          .btn;
+        }
       }
     }
   }

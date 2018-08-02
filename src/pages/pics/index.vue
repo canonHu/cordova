@@ -11,7 +11,7 @@
         @click="toDetail(item)"
         v-for="(item, index) in loveList"
       >
-        <img mode="widthFix" class="pics-item__zp" :src="item" />
+        <img mode="widthFix" class="pics-item__zp" :src="item.imageUrl" />
       </section>
       <section class="pics-add" @click="toEdit">
         +
@@ -23,20 +23,20 @@
 <script>
 import store from '../../store'
 export default {
-  data () {
-    return {
-      loveList: []
-    }
-  },
-
   computed: {
     yoursMood () {
       return store.state.yoursMood
+    },
+
+    loveList () {
+      console.log(store.state.loveList)
+      return store.state.loveList
     }
   },
 
   methods: {
     toDetail (item) {
+      store.commit('toDateil', item)
       const url = '../detail/main'
       wx.navigateTo({ url })
     },
@@ -45,6 +45,13 @@ export default {
       const url = '../edit/main'
       wx.navigateTo({ url })
     }
+  },
+
+  onLoad () {
+    store.commit('getData', {
+      url: 'findData',
+      params: {}
+    })
   },
 
   onShow () {

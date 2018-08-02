@@ -38,8 +38,7 @@ import card from '@/components/card'
 export default {
   data () {
     return {
-      motto: '',
-      userInfo: {}
+      motto: ''
     }
   },
 
@@ -60,22 +59,16 @@ export default {
       store.commit('remenberYours', { yoursMood: this.motto })
       const url = '../pics/main'
       wx.navigateTo({ url })
-    },
-    getUserInfo () {
-      // 调用登录接口
-      wx.login({
-        success: () => {
-          wx.getUserInfo({
-            success: (res) => {
-              this.userInfo = res.userInfo
-            }
-          })
-        }
-      })
     }
     // clickHandle (msg, ev) {
     //   console.log('clickHandle:', msg, ev)
     // }
+  },
+
+  computed: {
+    userInfo () {
+      return store.state.userInfo
+    }
   },
 
   watch: {
@@ -92,7 +85,7 @@ export default {
 
   created () {
     // 调用应用实例的方法获取全局数据
-    this.getUserInfo()
+    store.commit('getUserInfo')
   }
 }
 </script>
