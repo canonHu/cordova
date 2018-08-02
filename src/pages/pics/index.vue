@@ -29,7 +29,6 @@ export default {
     },
 
     loveList () {
-      console.log(store.state.loveList)
       return store.state.loveList
     }
   },
@@ -50,7 +49,10 @@ export default {
   onLoad () {
     store.commit('getData', {
       url: 'findData',
-      params: {}
+      params: {},
+      successFn: (state) => {
+        // console.log(6666, state)
+      }
     })
   },
 

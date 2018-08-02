@@ -7,7 +7,7 @@
       class="detail-img"
     >
 
-    <section class="detail-textarea">{{ data.store }}</section>
+    <section class="detail-textarea">{{ data.storeText }}</section>
 
     <section class="detail-change">
       <section
@@ -52,8 +52,8 @@ export default {
     },
     toEdit () {
       const url = '../edit/main'
-      store.commit('changeDetail', { detailContent: this.data })
-      wx.navigateTo({ url })
+      store.commit('toDateil', this.data)
+      wx.redirectTo({ url })
     }
   }
 }

@@ -36,14 +36,15 @@ const mutations = {
         'content-type': 'application/json' // 默认值
       },
       success: res => {
-        if (action.url === 'findData' && action.successFn === undefined) {
+        if (action.url === 'findData') {
           state.loveList = res.data
-          // action.successFn(res.data)
         }
+        action.successFn(res.data)
       }
     })
   },
   toDateil: (state, action) => {
+    console.log(action)
     state.detailState = action
   },
   remenberYours: (state, action) => {

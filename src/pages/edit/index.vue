@@ -2,8 +2,8 @@
   <div class="edit">
     <img
       alt=""
-      v-if="image"
-      :src="image"
+      v-if="imageUrl"
+      :src="imageUrl"
 			mode="widthFix"
       class="edit-img"
       @click="getImage"
@@ -38,7 +38,7 @@ export default {
   data () {
     return {
       logs: '什么都没有呢',
-      image: '',
+      imageUrl: '',
       storeText: ''
     }
   },
@@ -46,8 +46,17 @@ export default {
   computed: {
     detailContent () {
       const detailContent = store.state.detailContent
-      this.image = detailContent.image !== undefined ? detailContent.image : ''
+      this.imageUrl = detailContent.imageUrl !== undefined ? detailContent.imageUrl : ''
       this.store = detailContent.store !== undefined ? detailContent.store : ''
+    }
+  },
+
+  watch: {
+    detailContent (newValue) {
+      console.log(6666, newValue)
+      // const detailContent = store.state.detailContent
+      // this.imageUrl = detailContent.imageUrl !== undefined ? detailContent.imageUrl : ''
+      // this.store = detailContent.store !== undefined ? detailContent.store : ''
     }
   },
 
@@ -57,17 +66,24 @@ export default {
         store.commit('getData', {
           url: 'findData',
           params: {},
-          successFn: this.successFn
+          successFn: () => {
+            store.commit('toDateil', {
+              name: store.state.userInfo.nickName,
+              imageUrl: this.imageUrl,
+              storeText: this.storeText
+            })
+            const url = '../detail/main'
+            wx.redirectTo({ url })
+          }
         })
-        wx.navigateBack(1)
       }
     },
 
     toDetail (item) {
       const params = [{
         name: store.state.userInfo.nickName,
-        imageUrl: this.image,
-        store: this.storeText
+        imageUrl: this.imageUrl,
+        storeText: this.storeText
       }]
       store.commit('getData', {
         url: 'addData',
@@ -91,8 +107,7 @@ export default {
               user: 'test'
             },
             success: (res) => {
-              this.image = tempFilePaths[0]
-              console.log(res, tempFilePaths)
+              this.imageUrl = tempFilePaths[0]
               // do something
             }
           })
