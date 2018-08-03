@@ -37,26 +37,21 @@ export default {
 
   data () {
     return {
-      logs: '什么都没有呢',
+      disable: true,
       imageUrl: '',
-      storeText: ''
+      storeText: '',
+      articleId: '',
+      url: ''
     }
   },
 
   computed: {
-    detailContent () {
-      const detailContent = store.state.detailContent
-      this.imageUrl = detailContent.imageUrl !== undefined ? detailContent.imageUrl : ''
-      this.store = detailContent.store !== undefined ? detailContent.store : ''
-    }
-  },
-
-  watch: {
-    detailContent (newValue) {
-      console.log(6666, newValue)
-      // const detailContent = store.state.detailContent
-      // this.imageUrl = detailContent.imageUrl !== undefined ? detailContent.imageUrl : ''
-      // this.store = detailContent.store !== undefined ? detailContent.store : ''
+    detailState () {
+      const detailState = store.state.detailState
+      this.articleId = detailState.articleId !== undefined ? detailState.articleId : ''
+      this.imageUrl = detailState.imageUrl !== undefined ? detailState.imageUrl : ''
+      this.storeText = detailState.storeText !== undefined ? detailState.storeText : ''
+      this.url = this.articleId ? 'updateData' : 'addData'
     }
   },
 
@@ -72,8 +67,11 @@ export default {
               imageUrl: this.imageUrl,
               storeText: this.storeText
             })
-            const url = '../detail/main'
-            wx.redirectTo({ url })
+            if (this.disable) {
+              this.disable = false
+              const url = '../detail/main'
+              wx.redirectTo({ url })
+            }
           }
         })
       }
@@ -83,10 +81,11 @@ export default {
       const params = [{
         name: store.state.userInfo.nickName,
         imageUrl: this.imageUrl,
-        storeText: this.storeText
+        storeText: this.storeText,
+        articleId: this.articleId
       }]
       store.commit('getData', {
-        url: 'addData',
+        url: this.url,
         params,
         successFn: this.successFn
       })
@@ -120,6 +119,10 @@ export default {
         }
       })
     }
+  },
+
+  onShow () {
+    this.disable = true
   }
 }
 </script>

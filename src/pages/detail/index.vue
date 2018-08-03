@@ -36,6 +36,7 @@ export default {
 
   data () {
     return {
+      disable: true,
       logs: '什么都没有呢'
     }
   },
@@ -48,13 +49,36 @@ export default {
 
   methods: {
     forget () {
-      console.log(1)
+      const params = [{
+        name: store.state.userInfo.nickName,
+        articleId: this.data.articleId
+      }]
+      store.commit('getData', {
+        url: 'deleteData',
+        params: params,
+        successFn: () => {
+          store.commit('toDateil', {
+            name: store.state.userInfo.nickName,
+            imageUrl: this.imageUrl,
+            storeText: this.storeText
+          })
+          const url = '../pics/main'
+          wx.redirectTo({ url })
+        }
+      })
     },
     toEdit () {
-      const url = '../edit/main'
-      store.commit('toDateil', this.data)
-      wx.redirectTo({ url })
+      if (this.disable) {
+        this.disable = false
+        const url = '../edit/main'
+        store.commit('toDateil', this.data)
+        wx.redirectTo({ url })
+      }
     }
+  },
+
+  onShow () {
+    this.disable = true
   }
 }
 </script>

@@ -8,7 +8,6 @@ Vue.use(Vuex)
 const state = {
   count: 0,
   yoursMood: '逆着光行走，仍风吹雨打',
-  detailContent: {},
   userInfo: {},
   loveList: [],
   detailState: {}
@@ -44,7 +43,6 @@ const mutations = {
     })
   },
   toDateil: (state, action) => {
-    console.log(action)
     state.detailState = action
   },
   remenberYours: (state, action) => {
@@ -53,17 +51,6 @@ const mutations = {
     } else {
       state.yoursMood = '逆着光行走，仍风吹雨打'
     }
-  },
-  changeDetail: (state, action) => {
-    state.detailContent = action.detailContent
-  },
-  increment: (state) => {
-    const obj = state
-    obj.count += 1
-  },
-  decrement: (state) => {
-    const obj = state
-    obj.count -= 1
   }
 }
 

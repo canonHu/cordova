@@ -23,6 +23,12 @@
 <script>
 import store from '../../store'
 export default {
+  data () {
+    return {
+      disable: true
+    }
+  },
+
   computed: {
     yoursMood () {
       return store.state.yoursMood
@@ -35,14 +41,20 @@ export default {
 
   methods: {
     toDetail (item) {
-      store.commit('toDateil', item)
-      const url = '../detail/main'
-      wx.navigateTo({ url })
+      if (this.disable) {
+        this.disable = false
+        store.commit('toDateil', item)
+        const url = '../detail/main'
+        wx.navigateTo({ url })
+      }
     },
 
     toEdit () {
-      const url = '../edit/main'
-      wx.navigateTo({ url })
+      if (this.disable) {
+        this.disable = false
+        const url = '../edit/main'
+        wx.navigateTo({ url })
+      }
     }
   },
 
@@ -51,14 +63,13 @@ export default {
       url: 'findData',
       params: {},
       successFn: (state) => {
-        // console.log(6666, state)
       }
     })
   },
 
   onShow () {
-    store.commit('changeDetail', { detailContent: {} })
-    this.loveList = ['https://m.tuniucdn.com/fb2/t1/G5/M00/9A/41/Cii-tFtX1qmIK2WhAAFlvzc_SLcAAKzAgFD0doAAWXX211.jpg']
+    this.disable = true
+    store.commit('toDateil', {})
   }
 }
 

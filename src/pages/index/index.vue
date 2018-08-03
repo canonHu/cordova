@@ -38,7 +38,8 @@ import card from '@/components/card'
 export default {
   data () {
     return {
-      motto: ''
+      motto: '',
+      disable: true
     }
   },
 
@@ -57,8 +58,11 @@ export default {
         return
       }
       store.commit('remenberYours', { yoursMood: this.motto })
-      const url = '../pics/main'
-      wx.navigateTo({ url })
+      if (this.disable) {
+        this.disable = false
+        const url = '../pics/main'
+        wx.navigateTo({ url })
+      }
     }
     // clickHandle (msg, ev) {
     //   console.log('clickHandle:', msg, ev)
@@ -86,6 +90,10 @@ export default {
   created () {
     // 调用应用实例的方法获取全局数据
     store.commit('getUserInfo')
+  },
+
+  onShow () {
+    this.disable = true
   }
 }
 </script>
