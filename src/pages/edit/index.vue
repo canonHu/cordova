@@ -96,7 +96,7 @@ export default {
         success: (res) => {
           const tempFilePaths = res.tempFilePaths
           const uploadTask = wx.uploadFile({
-            url: 'http://172.31.84.74:3000/uploadImages',
+            url: 'https://www.canonhu.top/uploadImages',
             filePath: tempFilePaths[0],
             name: 'file',
             header: {

@@ -28,7 +28,7 @@ const mutations = {
   },
   getData: (state, action) => {
     wx.request({
-      url: 'http://172.31.84.74:3000/' + action.url, // 仅为示例，并非真实的接口地址
+      url: 'https://www.canonhu.top/' + action.url, // 仅为示例，并非真实的接口地址
       data: action.params,
       method: 'POST',
       header: {
