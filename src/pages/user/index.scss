@@ -1,0 +1,33 @@
+.home {
+    padding: 0 20rpx;
+    .home-banner {
+        
+    }
+
+    .home-grid {
+        .grid-head {
+            padding-left: 10rpx;
+            margin-bottom: 40rpx;
+            border-left: 4rpx solid #111;
+        }
+        .grid-box {
+            display: flex;
+            flex-wrap: wrap;
+
+            .item {
+                width: 33.3%;
+                height: 200rpx;
+                display: flex;
+                align-items: center;
+                justify-items: center;
+                flex-direction: column;
+
+                .item-img {
+                    width: 100rpx;
+                    height: 100rpx;
+                    display: block;
+                }
+            }
+        }
+    }
+}
