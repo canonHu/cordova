@@ -1,5 +1,6 @@
 .home {
     padding: 0 20rpx;
+    
     .home-banner {
         height: 280rpx;
         margin-bottom: 30rpx;
@@ -7,33 +8,18 @@
         background-color: pink;
     }
 
-    .home-grid {
-        .grid-head {
-            padding-left: 10rpx;
-            margin-bottom: 40rpx;
-            background-color: aquamarine;
-            border-left: 4rpx solid #111;
-        }
+    .home-list {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
 
-        .grid-box {
-            display: flex;
-            flex-wrap: wrap;
-            background-color: beige;
-
-            .item {
-                width: 33.3%;
-                height: 200rpx;
-                display: flex;
-                align-items: center;
-                flex-direction: column;
-                justify-content: center;
-
-                .item-img {
-                    width: 100rpx;
-                    height: 100rpx;
-                    display: block;
-                }
-            }
+        .item {
+            width: 100%;
+            height: 200rpx;
+            margin: 10rpx 0;
+            border-radius: 8rpx;
+            background-color: antiquewhite;
         }
     }
 }

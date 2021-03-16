@@ -1,26 +1,32 @@
-.home {
+.user {
     padding: 0 20rpx;
-    .home-banner {
-        
+    .user-banner {
+        height: 280rpx;
+        margin-bottom: 30rpx;
+        border-radius: 10rpx;
+        background-color: pink;
     }
 
-    .home-grid {
+    .user-grid {
         .grid-head {
             padding-left: 10rpx;
             margin-bottom: 40rpx;
+            background-color: aquamarine;
             border-left: 4rpx solid #111;
         }
+
         .grid-box {
             display: flex;
             flex-wrap: wrap;
+            background-color: beige;
 
             .item {
                 width: 33.3%;
                 height: 200rpx;
                 display: flex;
                 align-items: center;
-                justify-items: center;
                 flex-direction: column;
+                justify-content: center;
 
                 .item-img {
                     width: 100rpx;
